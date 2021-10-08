@@ -2,7 +2,7 @@
 /// TEHDÄÄN KUN SIVUSTO AVATAAN: 
 // Asetetaan kokonais klikkien ja boostien määrät:
 var currentEnergy = 0;
-var totalEnergy = 0;
+var totalEnergy = 90;
 var totalRealClicks = 0;
 var rocketBoosts = 0;
 var energiaSieppari = 0;
@@ -140,9 +140,11 @@ function stopPlayMusic(){
     if (isMusicPlaying === true) {
         spaceAudio.pause();
         isMusicPlaying = false
+        document.getElementById("audioPlayerControls").innerHTML = "Start Music"
     } else if (isMusicPlaying === false ) {
         spaceAudio.play();
         isMusicPlaying = true
+        document.getElementById("audioPlayerControls").innerHTML = "Stop Music"
     }
 }
 
@@ -390,6 +392,11 @@ function buySpaceRocketBoost(){
 var energiaSieppariAmount = []
 
 function buyEnergiaSieppari(){
+
+    if (currentEnergy >= 100){
+        
+    }
+
     autoClicker();
     energiaSieppari = energiaSieppari +1;
     alert("Ostit uuden energiasiepparin! Hieno homma!");
@@ -616,6 +623,7 @@ function levelUpListener(){
 
     if (levelProgress === 0 && totalEnergy >= 100){
         updateLevelProgress();
+        trophyReturner('trophy01');
     } else if(levelProgress === 1 && totalEnergy >= 200){
         updateLevelProgress();
     } else if(levelProgress === 2 && totalEnergy >= 300){
@@ -678,5 +686,27 @@ function levelUpListener(){
         updateLevelProgress();
     }
     
+
+}
+
+
+
+var trophyTextArray = ['V<div id="trophyTip"><span class="openedTrophyTipText">Gain 100 total energy!</span></div>', 'Gain 1000 total energy']
+
+
+
+function trophyReturner (openedTrophy) {
+
+    switch(openedTrophy){
+        case 'trophy01':
+            document.getElementsByClassName('achievementIcon')[0].innerHTML = trophyTextArray[0]
+            
+            alert("SAIT SAAVUTUKSEN!")
+
+            break;
+        case trophy02:
+            break;
+    }
+
 
 }

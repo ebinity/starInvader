@@ -7,11 +7,12 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
 
+        <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
+
     </head>
     <body onload="onLoad(), randomFacts()">
         <img src="Graphics/gameArea/space_background_design.jpg" class="bgImage">
-        <video playsinline autoplay muted loop poster="" id="bgvid">
-            <!--<source src="Graphics/videos/background_test1.mp4" type="video/mp4">-->
+         <!--<video playsinline autoplay muted loop poster="" id="bgvid"> -->
             
 
         </video>
@@ -19,9 +20,12 @@
 
 
         <header>
-            <div id="headerBg"></div>
-                <img class="logo" src="Graphics/icons/logoSpaceClicker.png">
-                <img src="Graphics/gameArea/centerSun.png" onClick="clickSun()" id="centerSun">
+            <!--<img class="logo" src="Graphics/icons/logoSpaceClicker.png"> -->
+            <div id="headerBgP2">
+            </div>
+            <div id="headerBg">
+            </div>
+            <img src="Graphics/gameArea/planets/Planet_Sun.png" onClick="clickSun()" id="centerSun">
                 <img src="Graphics/gameArea/animations/hitmark2.gif" id="showClick" style="visibility: hidden" onClick="clickSun()">
                 <img src="Graphics/gameArea/animations/hitmark2.gif" id="showClick1" style="visibility: hidden" onClick="clickSun()">
                 <img src="Graphics/gameArea/animations/hitmark2.gif" id="showClick2" style="visibility: hidden" onClick="clickSun()">
@@ -31,16 +35,16 @@
                 <div id="headerBar"></div>
 
                 <div id="startNotification">
-                    <div id="startGameNotification" style="" onClick="hider('startGameNotification'), startGameSoundtrack()">
+                    <div id="startGameNotification" style="visibility: hidden;" onClick="hider('startGameNotification'), startGameSoundtrack()">
                         <img src="Graphics/gameArea/misc/spaceHelmet.png" class="factSpaceHelmet">
                         <p class="startGameText">Are you ready to start playing?</p>
                     </div>
                 </div>
 
 
-                <div id="randomFacts" style="visibility:hidden ;" onClick="hider('randomFacts')">
+                <div id="randomFacts" style="visibility: " onClick="hider('randomFacts')">
                     <img src="Graphics/gameArea/misc/spaceHelmet.png" class="factSpaceHelmet">
-                    <p class="randomFactText" id="changeFactText">The International Space Station is the largest ever crewed object in space. </p>
+                    <p class="randomFactText" id="changeFactText">Gravity moves the same speed as light. So if sun suddenly disappeared, with it's light lasting for 8 minutes, it's gravity would last also 8 minutes.</p>
                 </div>
 
                 <div id="ohjeetPopup" style="visibility: hidden;">
@@ -237,34 +241,34 @@
            
                                 <td class="achievementIcon" onmouseover="hoverSound()">?                                
                                     <div id="trophyTip">
-                                        <span class="trophyTipText">Upcoming!</span>
+                                        <span class="openedTrophyTipText">???<br>Trophy locked</span>
                                     </div>   
                                 </td>
                                 <td class="achievementIcon" onmouseover="hoverSound()">?
                                     <div id="trophyTip">
-                                        <span class="trophyTipText">Upcoming</span>
+                                        <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
                                 <td class="achievementIcon" onmouseover="hoverSound()">?
                                     <div id="trophyTip">
-                                        <span class="trophyTipText">Upcoming</span>
+                                        <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
                             </tr>
                             <tr>                           
                                 <td class="achievementIcon" onmouseover="hoverSound()">?
                                     <div id="trophyTip">
-                                        <span class="trophyTipText">Upcoming</span>
+                                        <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
                                 <td class="achievementIcon" onmouseover="hoverSound()">?
                                     <div id="trophyTip">
-                                        <span class="trophyTipText">Upcoming</span>
+                                        <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
                                 <td class="achievementIcon" onmouseover="hoverSound()">?
                                     <div id="trophyTip">
-                                        <span class="trophyTipText">Upcoming</span>
+                                        <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
                             </tr>
@@ -277,7 +281,7 @@
             <button class="saveGame" onClick="saveSession()" >Tallenna peli</button>
             <button class="saveGame" onClick="loadSession()"  >Lataa</button>
             <br><br>
-            <button class="saveGame" onClick="stopPlayMusic()"  >Stop / play Music</button>
+            <button class="saveGame" onClick="stopPlayMusic()" id="audioPlayerControls" >Stop Music</button>
 
             <br>
 
