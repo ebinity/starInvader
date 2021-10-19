@@ -615,6 +615,12 @@ header{
     font-size:25px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
+.achievementIcon:hover{
+    background-image: linear-gradient(rgb(101, 0, 121), rgb(68, 0, 80));
+}
+.achievementIcon:active{
+    background-image: linear-gradient(rgb(64, 10, 75),rgb(50, 6, 58));
+}
 table {
     margin-left: auto;
     margin-right: auto;    
@@ -692,9 +698,9 @@ table {
 }
 
 #Planet_02{
-    width:140px;
+    width:180px;
     margin-top:45vh;
-    margin-left:-50vh;
+    margin-left:30vh;
 }
 
 #rocket1 {
