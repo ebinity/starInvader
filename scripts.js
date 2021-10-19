@@ -2,7 +2,7 @@
 /// TEHDÄÄN KUN SIVUSTO AVATAAN: 
 // Asetetaan kokonais klikkien ja boostien määrät:
 var currentEnergy = 0;
-var totalEnergy = 90;
+var totalEnergy = 0;
 var totalRealClicks = 0;
 var rocketBoosts = 0;
 var energiaSieppari = 0;
@@ -26,6 +26,7 @@ function hoverSound() {
 // Asettaa auringon epäklikattavaksi:
 function onLoad() {
     document.getElementById('centerSun').setAttribute('draggable', false);
+    document.getElementsByClassName('bgImageClose')[0].setAttribute('draggable', false);
 }
 
 // Tätä käytetään Indexistä kutsumaan random fakta - se asettaa faktan esille ja asettaa random timerin minkä välioajoin se kutsuu faktaa
@@ -368,15 +369,17 @@ function buySpaceRocketBoost(){
 
 function buySpaceRocketBoost(){
 
-    if (currentEnergy >= 100){
+    if (currentEnergy >= 100 && rocketBoosts < 10){
         rocketBoosts = rocketBoosts+=1;
         currentEnergy = currentEnergy - 100;
         document.getElementById("currentEnergyNum").innerHTML = currentEnergy;
         document.getElementById("boostejaYhteensa").innerHTML = rocketBoosts;
         alert("Saat nyt enemmän energiaa jokaisella klikillä!")
         updateRocketBoostBar(1);
-    } else  {
+    } else if (currentEnergy < 100 && rocketBoosts <= 10){
         alert("Oijoi! Sinulla ei ole tarpeeksi kolikeita!")
+    } else {
+        alert("You have the max amount of rocket boosts! Great work!")
     }
 
 
@@ -393,18 +396,47 @@ var energiaSieppariAmount = []
 
 function buyEnergiaSieppari(){
 
-    if (currentEnergy >= 100){
-        
+    if (currentEnergy >= 10 && energiaSieppari < 1){
+        document.getElementsByClassName('upgrade1price')[0].innerHTML = '20';
+        autoclicker();
+        currentEnergyUpdater(10)
+    } else if (currentEnergy >= 20 && energiaSieppari < 2) {
+        document.getElementsByClassName('upgrade1price')[0].innerHTML = '40';
+        autoclicker();
+        currentEnergyUpdater(20)
+    } else if (currentEnergy >= 40 && energiaSieppari < 3) {
+        document.getElementsByClassName('upgrade1price')[0].innerHTML = '60';
+        autoclicker();
+        currentEnergyUpdater(40)
+    } else if (currentEnergy >= 60 && energiaSieppari < 4) {
+        document.getElementsByClassName('upgrade1price')[0].innerHTML = '80';
+        autoclicker();
+        currentEnergyUpdater(60)
+    } else if (currentEnergy >= 80 && energiaSieppari < 5) {
+        document.getElementsByClassName('upgrade1price')[0].innerHTML = '100';
+        autoclicker();
+        currentEnergyUpdater(80)
+    } else if (currentEnergy >= 100 && energiaSieppari < 6) {
+        document.getElementsByClassName('upgrade1price')[0].innerHTML = '200';
+        autoclicker();
+        currentEnergyUpdater(100)
+    } else if (currentEnergy >= 200 && energiaSieppari < 7) {
+        document.getElementsByClassName('upgrade1price')[0].innerHTML = '300';
+        autoclicker();
+        currentEnergyUpdater(200)
+    } else {
+        alert("You don't have enough energy!")
     }
 
-    autoClicker();
-    energiaSieppari = energiaSieppari +1;
-    alert("Ostit uuden energiasiepparin! Hieno homma!");
-
-    document.getElementById('gameArea').innerHTML += createLocation("energiaSieppari");
-    document.getElementById("autoKlikkereitaYhteensa").innerHTML = energiaSieppari;
-    energiaSieppariAmount.push("energiasieppari");
-
+        function autoclicker(){
+            autoClicker();
+            energiaSieppari = energiaSieppari +1;
+            alert("Ostit uuden energiasiepparin! Hieno homma!");
+        
+            document.getElementById('gameArea').innerHTML += createLocation("energiaSieppari");
+            document.getElementById("autoKlikkereitaYhteensa").innerHTML = energiaSieppari;
+            energiaSieppariAmount.push("energiasieppari");
+        }
 }
 
 function autoClicker() {
@@ -578,13 +610,21 @@ function showHiddenDiv(name){
     objToShow.style.visibility = 'visible';
 }
 
+
+function deleter(name){
+
+    document.getElementById(name).innerHTML = '<div id="trophyPopUp"></div>'
+
+
+}
+
+
 var levelBarAmount = 0;
 
 function updateLevelProgress () {
     if (totalEnergy >= levelBarAmount+100){
         levelBarAmount = totalEnergy;
         levelProgress = levelProgress+1;
-        alert("Toimii!")
         visualizeLevelProgress(1);
     }
 }
@@ -700,7 +740,6 @@ function trophyReturner (openedTrophy) {
     switch(openedTrophy){
         case 'trophy01':
             document.getElementsByClassName('achievementIcon')[0].innerHTML = trophyTextArray[0]
-            
             alert("SAIT SAAVUTUKSEN!")
 
             break;
@@ -710,3 +749,180 @@ function trophyReturner (openedTrophy) {
 
 
 }
+
+
+
+let sailotutTrophyt = [
+    '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 1</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 100 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->', 
+    '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->',
+    '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->']
+
+
+
+function openTrophy(nameOfTrophy){
+
+    switch(nameOfTrophy){
+        case 'trophy1':
+            showHiddenDiv('trophyPopUpPlacer') 
+            document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[0] 
+            clickTimeout();
+            break;
+        case 'trophy2':
+            showHiddenDiv('trophyPopUpPlacer') 
+            document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[1] 
+            clickTimeout();
+            break;
+        case 'trophy3':
+            showHiddenDiv('trophyPopUp')    
+            clickTimeout();
+            break;
+        case 'trophy4':
+            showHiddenDiv('trophyPopUp')    
+            clickTimeout();
+            break;
+        case 'trophy5':
+            showHiddenDiv('trophyPopUp')    
+            clickTimeout();
+            break;
+        case 'trophy6':
+            showHiddenDiv('trophyPopUp')    
+            clickTimeout();
+            break;
+        default:
+            alert("This function did not work correctly!")
+            break;
+    }
+
+}
+
+
+
+function currentEnergyUpdater(amountToChange){
+
+    currentEnergy = currentEnergy - amountToChange;
+
+    document.getElementById('currentEnergyNum').innerHTML = currentEnergy;
+
+}
+
+    
+
+
+
+
+//// STAR SETTIi
+//// STAR SETTIi
+//// STAR SETTIi
+//// STAR SETTIi
+
+
+particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 355,
+        "density": {
+          "enable": true,
+          "value_area": 789.1476416322727
+        }
+      },
+      "color": {
+        "value": "#ffffff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.48927153781200905,
+        "random": false,
+        "anim": {
+          "enable": true,
+          "speed": 0.2,
+          "opacity_min": 0,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 2,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 2,
+          "size_min": 0,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": false,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 0.2,
+        "direction": "none",
+        "random": true,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "bubble"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 83.91608391608392,
+          "size": 1,
+          "duration": 3,
+          "opacity": 1,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });

@@ -1,3 +1,13 @@
+#particles-js {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+
+  }
+
+
 html {
     color:white;
     margin:auto;
@@ -15,7 +25,7 @@ body {
     text-align:center;
     position:relative;
     /** background-image:url("Graphics/gameArea/background.jpg"); **/
-    background-image:url("Graphics/gameArea/space_background_design.jpg");
+    /** <background-image:url("Graphics/gameArea/space_background_design.jpg"); **/
     background-repeat: no-repeat;
     background-position: center center;
     font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -23,6 +33,15 @@ body {
 }
 
 video, .bgImage{
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:-5;
+}
+.bgImageClose{
     object-fit: cover;
     width: 100vw;
     height: 100vh;
@@ -54,7 +73,7 @@ header{
     height: 8vh;
     text-align:center;
     box-shadow: 0px 0px 100px 10px rgb(132, 0, 255, 0.8);
-    z-index:50;
+    z-index:150;
 }
 #headerBg{
     background-image: url(Graphics/controls/lineTest.png);
@@ -111,11 +130,12 @@ header{
     text-align:center;
     margin:auto;
     border-radius: 20px;
+    position:relative;
 }
+
 #startGameNotification{
-    background-image: linear-gradient(rgb(19, 47, 99), rgb(25, 69, 141));
-    box-shadow: 0 4px 5px rgb(0 0 0 / 0.3);
     width:370px;
+    background-color:red;
     height:70px;
     text-align:center;
     border-radius: 20px;
@@ -134,19 +154,20 @@ header{
     width:370px;
 }
 #startNotification {
-    position:absolute;
+
     text-align:center;
     margin:auto;
-    width:100%;
+
 
 }
 
 
 .factSpaceHelmet{
     width:50px;
-    margin-left:-190px;
-    margin-top:13px;
     position:absolute;
+    left:20px;
+    top:10px;
+
 
 }
 
@@ -346,6 +367,32 @@ header{
 }
 
 
+.trophyRewardPic {
+    width:90px;
+    position:absolute;
+    margin-left:-280px;
+    margin-top:-10;
+
+}
+.trophyRewardPopUpText{
+    margin-left:130px;
+    margin-top:25px;
+    max-width:420px;
+    padding-bottom:40px;
+}
+
+.trophyPopupTitle{
+    border-bottom:1px solid;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+
+#trophyPopUpContent{
+
+
+}
+
 
 .openedTrophyTipText{
     visibility: hidden;
@@ -388,20 +435,23 @@ header{
 
 }
 
-#ohjeetPopup, #releaseNotes{
-
+#ohjeetPopup, #releaseNotes, #trophyPopUp, #trophyPopUpPlacer{
     position:relative;
     width:600px;
-    height:265px;
+    height:auto;
     background-image: linear-gradient(rgb(19, 47, 99), rgb(25, 69, 141));
     box-shadow: 0 4px 5px rgb(0 0 0 / 0.3);
     margin:auto;
-
     margin-top:-200px;
     z-index:200;
-
     border-radius: 20px;
 }
+
+#releaseText, #ohjeetText, #trophyRewardPopUpText{
+    padding-bottom:40px;
+    padding-top:20px;
+}
+
 
 .ohjeetPopUpText{
     list-style-type: none;
@@ -422,6 +472,7 @@ header{
     z-index:500;
     position:absolute;
     margin-left:250;
+    margin-top:10px;
     color:rgb(134, 134, 134);
     font-family: 'Orbitron', sans-serif;
     background-image: linear-gradient(rgb(25, 69, 141), rgb(19, 47, 99));
@@ -514,8 +565,9 @@ header{
 
 
 .saveGame{
-    height:30px;
-    width:120px;
+    min-height:30px;
+    min-width:120px;
+    width:auto;
     color:white;
     font-family: 'Orbitron', sans-serif;
     background-image: linear-gradient(rgb(25, 69, 141), rgb(19, 47, 99));
@@ -524,8 +576,9 @@ header{
     border-radius: 5px;
 }
 .saveGame:hover{
-    height:30px;
-    width:120px;
+    min-height:30px;
+    min-width:120px;
+    width:auto;
     color:white;
     font-family: 'Orbitron', sans-serif;
     background-image: linear-gradient(rgb(25, 69, 141), rgb(4, 31, 75));
@@ -599,11 +652,32 @@ table {
 }
 
 #centerSun {
-    z-index:51;
-    width:350px;
-    margin-top:100px;
+    z-index:190;
+    width:250px;
+    margin-top:150px;
    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.glow{
+    -webkit-box-shadow: 0px 0px 31px 9px rgb(255, 94, 0);
+    -moz-box-shadow: 0px 0px 31px 9px rgba(255, 94, 0);
+    border-radius: 300px;
+}
+
 
 #venus{
     margin-left:-500px;
@@ -642,6 +716,22 @@ table {
 /** GAME AREA RIGHT ALUE END **/
 /** GAME AREA RIGHT ALUE END **/
 /** GAME AREA RIGHT ALUE END **/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

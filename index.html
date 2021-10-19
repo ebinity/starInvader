@@ -9,14 +9,26 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
 
+
+
+
     </head>
     <body onload="onLoad(), randomFacts()">
-        <img src="Graphics/gameArea/space_background_design.jpg" class="bgImage">
+       <img src="Graphics/gameArea/space_background_design.jpg" class="bgImage">
+       <img src="Graphics/gameArea/space_background_design_close.png" class="bgImageClose">
+
+
+        
+            <div id="particles-js"></div>
+            <!-- particles.js lib - https://github.com/VincentGarreau/particles.js --> 
+            <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+            <!-- partial -->
+            <script  src="spacescript.js"></script>
+
          <!--<video playsinline autoplay muted loop poster="" id="bgvid"> -->
             
 
         </video>
-
 
 
         <header>
@@ -25,7 +37,10 @@
             </div>
             <div id="headerBg">
             </div>
-            <img src="Graphics/gameArea/planets/Planet_Sun.png" onClick="clickSun()" id="centerSun">
+        <div id="particles-js"></div>
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+            <img src="Graphics/gameArea/planets/Planet_Sun.png" class="glow" onClick="clickSun(), startSetTimeoutAnimation()" id="centerSun">
                 <img src="Graphics/gameArea/animations/hitmark2.gif" id="showClick" style="visibility: hidden" onClick="clickSun()">
                 <img src="Graphics/gameArea/animations/hitmark2.gif" id="showClick1" style="visibility: hidden" onClick="clickSun()">
                 <img src="Graphics/gameArea/animations/hitmark2.gif" id="showClick2" style="visibility: hidden" onClick="clickSun()">
@@ -34,59 +49,91 @@
                 <!--<div id="showClick" style="visibility: hidden">x</div>-->
                 <div id="headerBar"></div>
 
-                <div id="startNotification">
-                    <div id="startGameNotification" style="visibility: hidden;" onClick="hider('startGameNotification'), startGameSoundtrack()">
+                <div id="startNotification">                        
+                    <div id="startGameNotification" style="visibility: visible;" onClick="hider('startGameNotification'), startGameSoundtrack()">
                         <img src="Graphics/gameArea/misc/spaceHelmet.png" class="factSpaceHelmet">
                         <p class="startGameText">Are you ready to start playing?</p>
                     </div>
                 </div>
 
 
-                <div id="randomFacts" style="visibility: " onClick="hider('randomFacts')">
+                <div id="randomFacts" style="visibility: hidden;" onClick="hider('randomFacts')">
                     <img src="Graphics/gameArea/misc/spaceHelmet.png" class="factSpaceHelmet">
                     <p class="randomFactText" id="changeFactText">Gravity moves the same speed as light. So if sun suddenly disappeared, with it's light lasting for 8 minutes, it's gravity would last also 8 minutes.</p>
                 </div>
 
                 <div id="ohjeetPopup" style="visibility: hidden;">
-                        <br>
 
                     <button class="ohjeetPopupCloseButton" onClick="hider('ohjeetPopup')">X</button>
-
-                    <h2 class="ohjeetPopupTitle">Ohjeet</p>
-                        <ul class="ohjeetPopUpText">
-                            <li>1) Kerää energiaa tähdistä klikkaamalla isointa aurinkotähteä.</li>
-                            <br>
-                            <li>2) Ostamalla päivityksiä nopeutat energian keräämistä.</li>
-                            <br>
-                            <li>3) Varo satunnaisia tähtien muutoksia! Ne tuhoavat hankittuja päivityksiä mikä hidastaa energian keräämistä.</li>
-                            <br>
-                            <li>4) Saatuasi tarpeeksi klikkauksia, pääset seuraavalla tasolle.</li>
-                            <br>
-                            <li>5) Pidä hauskaa, ja muista tallentaa peli!</li>
-                        </ul>
+                    <div id="ohjeetText">
+                        <h2 class="ohjeetPopupTitle">Ohjeet</h2>
+                            <ul class="ohjeetPopUpText">
+                                <li>1) Kerää energiaa tähdistä klikkaamalla isointa aurinkotähteä.</li>
+                                <br>
+                                <li>2) Ostamalla päivityksiä nopeutat energian keräämistä.</li>
+                                <br>
+                                <li>3) Varo satunnaisia tähtien muutoksia! Ne tuhoavat hankittuja päivityksiä mikä hidastaa energian keräämistä.</li>
+                                <br>
+                                <li>4) Saatuasi tarpeeksi klikkauksia, pääset seuraavalla tasolle.</li>
+                                <br>
+                                <li>5) Pidä hauskaa, ja muista tallentaa peli!</li>
+                            </ul>
+                        </div>
                 </div>
 
                 <div id="releaseNotes" style="visibility: hidden;">
-                    <br>
+      
+                    <button class="ohjeetPopupCloseButton" onClick="hider('releaseNotes')">X</button>
 
-                <button class="ohjeetPopupCloseButton" onClick="hider('releaseNotes')">X</button>
+                        <div id="releaseText">
+                            <h2 class="ohjeetPopupTitle">Release Notes</h2>
+                                <ul class="ohjeetPopUpText">
+                                    <p>Last update:</p>
+                                    <li>-Graphic update!</li>
+                                    <li>-Added new space facts!</li>
+                                    <li>-Added soundtrack and play functions</li>
 
-                <h2 class="ohjeetPopupTitle">Release Notes</p>
-                    <ul class="ohjeetPopUpText">
-                        <p>Last update:</p>
-                        <li>-Graphic update!</li>
-                        <li>-Added new space facts!</li>
-                        <li>-Added soundtrack and play functions</li>
+                                    <p>Update before:</p>
+                                    <li>-Fixed saving and loading.</li>
+                                    <li>-Added Level Progress visual and functionality</li>
+                                    <li>-Fixed clicking animation effect to repeat when clicked repeatedly</li>
+                                    <li>-Updated logo</li>
+                                    <li>-Added achievements table (Functionality coming later)</li>
+                                </ul>
+                        </div>
+                </div>
 
-                        <p>Update before:</p>
-                        <li>-Fixed saving and loading.</li>
-                        <li>-Added Level Progress visual and functionality</li>
-                        <li>-Fixed clicking animation effect to repeat when clicked repeatedly</li>
-                        <li>-Updated logo</li>
-                        <li>-Added achievements table (Functionality coming later)</li>
+                <div id="trophyPopUpPlacer" style="visibility: hidden;">
+                    <button class="ohjeetPopupCloseButton" onClick='deleter("trophyPopUp"), hider("trophyPopUpPlacer")'>X</button>
 
-                    </ul>
-            </div>
+                    <div id="trophyPopUp">
+
+
+                </div> <!-- trophyPopUp END-->
+
+
+
+
+
+                <!--
+                <div id="trophyPopUp2" style="visibility: hidden;">
+                    <button class="ohjeetPopupCloseButton" onClick="hider('trophyPopUp2')">X</button>
+                    <h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2>
+                        <img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" >
+                            <div id="trophyPopUpContent">
+                                    <p class="trophyRewardPopUpText">As you reached the amount of over 100 total energy you learned that Neutron stars can spin 600 times per second.</p>
+                            </div><!--Trophy popupcontent END
+                </div> <!-- trophyPopUp END
+                -->
+
+
+
+
+
+
+
+
+
 
 
         </header>
@@ -153,7 +200,7 @@
                                 <span class="tooltiptext">Paranna nykyistä rakettiasi, jotta keräät <br> kerralla enemmän energiaa!</span>
                             </div>
                         <img src="Graphics/icons/energyIcon.png" class="upgradesEnergyIcon">
-                        <p class="hinta">100</p>
+                        <p class="hinta upgrade1price">10</p>
                     </div>
                     <div id="upgrade2" onClick="buySpaceRocketBoost()"  onmouseover="hoverSound()">
                         <p class="otsikko">Space Rocket Boost</p>
@@ -161,7 +208,7 @@
                                 <span class="tooltiptext">Energiasieppari pörrää planeettojen ympärillä keräten automaattisesti energiaa.</span>
                             </div>
                         <img src="Graphics/icons/energyIcon.png" class="upgradesEnergyIcon">
-                        <p class="hinta">1000</p>
+                        <p class="hinta">100</p>
                     </div>
                     <div id="upgrade3" onClick="buySpaceColony()"  onmouseover="hoverSound()">
                         <p class="otsikko">Siirtokunta</p>
@@ -171,7 +218,7 @@
                                     </span>
                             </div>
                         <img src="Graphics/icons/energyIcon.png" class="upgradesEnergyIcon">
-                        <p class="hinta">10000</p>
+                        <p class="hinta">1000</p>
                     </div>
                     <div id="upgrade4" onClick="buySpaceColony()" class="hiddenUpgrade"> 
                         <p class="otsikko">?+.?3?9+??</p>
@@ -239,34 +286,34 @@
                         <tbody>   
                             <tr>             
            
-                                <td class="achievementIcon" onmouseover="hoverSound()">?                                
+                                <td class="achievementIcon" onmouseover="hoverSound()" onclick="openTrophy('trophy1')">?                                
                                     <div id="trophyTip">
                                         <span class="openedTrophyTipText">???<br>Trophy locked</span>
                                     </div>   
                                 </td>
-                                <td class="achievementIcon" onmouseover="hoverSound()">?
+                                <td class="achievementIcon" onmouseover="hoverSound()" onclick="openTrophy('trophy2')">?
                                     <div id="trophyTip">
                                         <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
-                                <td class="achievementIcon" onmouseover="hoverSound()">?
+                                <td class="achievementIcon" onmouseover="hoverSound()" onclick="openTrophy('trophy3')">?
                                     <div id="trophyTip">
                                         <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
                             </tr>
                             <tr>                           
-                                <td class="achievementIcon" onmouseover="hoverSound()">?
+                                <td class="achievementIcon" onmouseover="hoverSound()" onclick="openTrophy('trophy4')">?
                                     <div id="trophyTip">
                                         <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
-                                <td class="achievementIcon" onmouseover="hoverSound()">?
+                                <td class="achievementIcon" onmouseover="hoverSound()" onclick="openTrophy('trophy5')">?
                                     <div id="trophyTip">
                                         <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
                                 </td>
-                                <td class="achievementIcon" onmouseover="hoverSound()">?
+                                <td class="achievementIcon" onmouseover="hoverSound()" onclick="openTrophy('trophy6')">?
                                     <div id="trophyTip">
                                         <span class="trophyTipText">???<br>Trophy locked</span>
                                     </div>  
