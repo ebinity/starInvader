@@ -682,6 +682,7 @@ function levelUpListener(){
         updateLevelProgress();
     } else if(levelProgress === 9 && totalEnergy >= 1000){
         updateLevelProgress();
+        trophyReturner('trophy02');
     } else if(levelProgress === 10 && totalEnergy >= 1100){
         updateLevelProgress();
     } else if(levelProgress === 11 && totalEnergy >= 1200){
@@ -741,7 +742,7 @@ function trophyReturner (openedTrophy) {
         case 'trophy01':
             document.getElementsByClassName('achievementIcon')[0].innerHTML = trophyTextArray[0]
             alert("SAIT SAAVUTUKSEN!")
-
+            openTrophy('trophy1');
             break;
         case trophy02:
             break;
@@ -754,8 +755,8 @@ function trophyReturner (openedTrophy) {
 
 let sailotutTrophyt = [
     '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 1</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 100 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->', 
-    '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->',
-    '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->']
+    '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/planets/realPlanets/mars.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->',
+    '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 3</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->']
 
 
 
@@ -773,7 +774,8 @@ function openTrophy(nameOfTrophy){
             clickTimeout();
             break;
         case 'trophy3':
-            showHiddenDiv('trophyPopUp')    
+            showHiddenDiv('trophyPopUpPlacer') 
+            document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[2] 
             clickTimeout();
             break;
         case 'trophy4':
