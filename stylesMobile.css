@@ -136,7 +136,7 @@ header{
     margin-top:-10;
 }
 
-.startGameText, .randomFactText, .storyStatement{
+.startGameText, .randomFactText{
     min-width:300px;
     max-width:350px;
     position:relative;
