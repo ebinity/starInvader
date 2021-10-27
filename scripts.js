@@ -13,8 +13,8 @@ if(window.innerWidth < 800){
 
 /// TEHDÄÄN KUN SIVUSTO AVATAAN: 
 // Asetetaan kokonais klikkien ja boostien määrät:
-var currentEnergy = 0;
-var totalEnergy = 0;
+var currentEnergy = 99990;
+var totalEnergy = 99990;
 var totalRealClicks = 0;
 var rocketBoosts = 0;
 var energiaSieppari = 0;
@@ -61,7 +61,7 @@ function startGame(){
     document.getElementById('notificationsPlacer').remove();
 
     var notificationActualHtml = notiFirst[0] + notiSec[0] + notiThird[0];
-    document.getElementById('notificationsArea').innerHTML = notificationActualHtml;
+    document.getElementById('notificationsArea').innerHTML =    notificationActualHtml;
 
     randomFacts();
     startGameSoundtrack();
@@ -94,11 +94,16 @@ function getRandomFact(){
     var chooseFact = Math.floor(Math.random() * listOfFacts.length);
 
     var randomFakta = document.getElementById("notificationsPlacer");
-    var changeFactText = document.getElementById("changeFactText");
+    var faktanTekstiAlue = '<p class="randomFactText" id="changeFactText"></p>'
+
 
     window.setTimeout(
         function () {
         randomFakta.style.visibility = '';
+
+        randomFakta.innerHTML += faktanTekstiAlue;
+
+        var changeFactText = document.getElementById("changeFactText");
 
         changeFactText.innerHTML = listOfFacts[chooseFact];
 
@@ -983,6 +988,13 @@ function showHiddenDiv(name){
 
 function deleter(name){
 
+
+    if (name === ""){
+
+    }
+
+
+
     if (name === "notifications"){
         startNotificationClosed = true;
         document.getElementById(name).innerHTML = '<div id="trophyPopUp"></div>'
@@ -1139,42 +1151,69 @@ let sailotutTrophyt = [
     '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/planets/realPlanets/mars.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->',
     '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 3</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->']
 
+    let sailotutTrophyt2 = [
+        '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 1</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 100 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->', 
+        '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/planets/realPlanets/mars.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->',
+        '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 3</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->']
+    
+    
 
+    // trophyen tämän hetkinen tila. trophy openeria varten.
+let trophyInfo = {
+    trophy1: false,
+    trophy2: true,
+    trophy3: false,
+    trophy4: false,
+    trophy5: false,
+    trophy6: false,
+}
 
 function openTrophy(nameOfTrophy){
 
-    switch(nameOfTrophy){
-        case 'trophy1':
-            showHiddenDiv('trophyPopUpPlacer') 
-            document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[0] 
-            clickTimeout();
-            break;
-        case 'trophy2':
-            showHiddenDiv('trophyPopUpPlacer') 
-            document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[1] 
-            clickTimeout();
-            break;
-        case 'trophy3':
-            showHiddenDiv('trophyPopUpPlacer') 
-            document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[2] 
-            clickTimeout();
-            break;
-        case 'trophy4':
-            showHiddenDiv('trophyPopUp')    
-            clickTimeout();
-            break;
-        case 'trophy5':
-            showHiddenDiv('trophyPopUp')    
-            clickTimeout();
-            break;
-        case 'trophy6':
-            showHiddenDiv('trophyPopUp')    
-            clickTimeout();
-            break;
-        default:
-            alert("This function did not work correctly!")
-            break;
+
+    if (trophyInfo[nameOfTrophy] === false){
+        return;
+    } else {
+        switch(nameOfTrophy){
+            case 'trophy1':
+                    showHiddenDiv('trophyPopUpPlacer') 
+                    document.getElementById('notificationsPlacer').innerHTML = sailotutTrophyt2[0];
+                    // document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[0] 
+                    clickTimeout();
+                break;
+            case 'trophy2':
+                showHiddenDiv("notificationsPlacer")
+                //showHiddenDiv('trophyPopUpPlacer') 
+                document.getElementById('notificationsPlacer').innerHTML = sailotutTrophyt2[0];
+                // document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[1] 
+                clickTimeout();
+                break;
+            case 'trophy3':
+                showHiddenDiv('trophyPopUpPlacer') 
+                document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[2] 
+                clickTimeout();
+                break;
+            case 'trophy4':
+                showHiddenDiv('trophyPopUp')    
+                clickTimeout();
+                break;
+            case 'trophy5':
+                showHiddenDiv('trophyPopUp')    
+                clickTimeout();
+                break;
+            case 'trophy6':
+                showHiddenDiv('trophyPopUp')    
+                clickTimeout();
+                break;
+            default:
+                alert("This function did not work correctly!")
+                break;
+        }
+
     }
+
+
+    
 
 }
 
