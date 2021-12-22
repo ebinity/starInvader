@@ -13,8 +13,8 @@ if(window.innerWidth < 800){
 
 /// TEHDÄÄN KUN SIVUSTO AVATAAN: 
 // Asetetaan kokonais klikkien ja boostien määrät:
-var currentEnergy = 99990;
-var totalEnergy = 99990;
+var currentEnergy = 0;
+var totalEnergy = 0;
 var totalRealClicks = 0;
 var rocketBoosts = 0;
 var energiaSieppari = 0;
@@ -23,11 +23,23 @@ var levelProgress = 0;
 
 let storyContinued = 0;
 
-
 let aVastauksia = "";
 let bVastauksia = "";
 let cVastauksia = "";
 var vastaustenKirjaimet = "";
+
+
+let isFactPopupOpen = false;
+let isOhjeetPopupOpen = false;
+var isStoryPopupActive = false;
+
+
+
+var levelBarAmount = 0;
+var lvlPgAmount = 0;
+var boostBarAmount = 0;
+
+var economyHealth = 100;
 
 
 var startNotificationClosed = false;
@@ -49,20 +61,13 @@ function onLoad() {
     document.getElementsByClassName('bgImageClose')[0].setAttribute('draggable', false);
 
     //Lisää onloadin kautta aloitusteksti!
-    document.getElementById();
+    //document.getElementById();
 }
 
 function startGame(){
-
-    var notiFirst = ['<div id="notificationsPlacer"  style="visibility: hidden;" ><button class="ohjeetPopupCloseButton" onClick='];
-    var notiSec = ['hider("notificationsPlacer")']
-    var notiThird = ['>X</button><img src="Graphics/gameArea/misc/spaceHelmet.png" class="factSpaceHelmet"><p class="randomFactText" id="changeFactText"></p></div></div>']
+    // Build the are for Facts to be shown in the HTML
 
     document.getElementById('notificationsPlacer').remove();
-
-    var notificationActualHtml = notiFirst[0] + notiSec[0] + notiThird[0];
-    document.getElementById('notificationsArea').innerHTML =    notificationActualHtml;
-
     randomFacts();
     startGameSoundtrack();
 
@@ -83,32 +88,44 @@ function randomFacts() {
     
 }
 
-var listOfFacts = ['Did you know that space <br> is completely silent!', 'In the observable universe there are an estimated 2 trillion <br> (2,000,000,000,000) galaxies.', 'The International Space Station is the largest ever crewed object in space.', 'The universe is observed to be 13.8 billion years old and has been expanding since its formation in the Big Bang.', 'Space is a hard vacuum, meaning it is a void containing very little matter.', 'One million earths can fit in the sun.', 'There are more stars in the universe than grains of sand on earth.', "Gravity moves the same speed as light. So if sun suddenly disappeared, with it's light lasting for 8 minutes, it's gravity would last also 8 minutes."];
+var listOfFacts = ['Space is completely silent!', 'In the observable universe there are an estimated 2 trillion (2,000,000,000,000) galaxies.', 'The International Space Station is the largest ever crewed object in space.', 'The universe is observed to be 13.8 billion years old and has been expanding since its formation in the Big Bang.', 'Space is a hard vacuum, meaning it is a void containing very little matter.', 'One million earths can fit in the sun.', 'There are more stars in the universe than grains of sand on earth.', "Gravity moves the same speed as light. So if sun suddenly disappeared, with it's light lasting for 8 minutes, it's gravity would last also 8 minutes."];
 
 // TÄssä annetaan ylläolevan function kutsuma random fakta ja lopulta poistetaan se näkyvistä: HUOM!!! aseta poistuminen ennen kuin uusi tulee näkyvinin!
 function getRandomFact(){
+
+    if (isFactPopupOpen || isOhjeetPopupOpen || isStoryPopupActive){
+        // do nothing ;)
+    } else if (isFactPopupOpen === false && isOhjeetPopupOpen === false){
+        isFactPopupOpen = true;
+
+        var notiFirst = ['<div id="notificationsPlacer"  style="visibility: hidden;" ><button class="ohjeetPopupCloseButton" onClick='];
+        var notiSec = ['deleter("notificationsPlacer")']
+        var notiThird = ['>X</button><img src="Graphics/gameArea/misc/spaceHelmet.png" class="factSpaceHelmet"><p class="factTitle">Your civilization have learned that: </p> <p class="randomFactText" id="changeFactText"></p></div></div>']
+    
+        var notificationActualHtml = notiFirst[0] + notiSec[0] + notiThird[0];
+        document.getElementById('notificationsArea').innerHTML = notificationActualHtml;
 
 
     // var randomFakta = document.getElementById("randomFacts");
     // var changeFactText = document.getElementById("changeFactText");
     var chooseFact = Math.floor(Math.random() * listOfFacts.length);
-
     var randomFakta = document.getElementById("notificationsPlacer");
-    var faktanTekstiAlue = '<p class="randomFactText" id="changeFactText"></p>'
 
 
     window.setTimeout(
         function () {
         randomFakta.style.visibility = '';
 
-        randomFakta.innerHTML += faktanTekstiAlue;
-
         var changeFactText = document.getElementById("changeFactText");
 
         changeFactText.innerHTML = listOfFacts[chooseFact];
 
         msgRadioEffectAudio.play();
-        }, 70000);
+        }, 7000);
+    
+    }
+
+
     
 
 
@@ -116,14 +133,6 @@ function getRandomFact(){
 
 
 
-
-
-
-// tarina.dialog1.answerA
-
-// tarina.dialog1.pageA1.answerA
-
-// tarina.dialog1.pageA1.pageA1A.answerA
 
 
 
@@ -142,6 +151,7 @@ let story1 = {
         },
         dialog1b: {
             mainMessage1: "Playing dumb huh? That attitude wont take you far. Just wait for it...",
+            dialogAffectsHealth: true,
             dialogEnd: true,
         },
         dialog1ba: {
@@ -182,33 +192,28 @@ let story1 = {
 };
 
 
-
-
-
-
-
 let currentDialog = 0;
-
-
 
 // esim: 10 pistettä saatua, listener kutsuu storyTelleriä arvolla 1 
                 // storyTeller(1)
 function storyTeller(tarinanNumero){
+
+
     msgRadioEffectAudio.play();
 
         // printataan näytölle, tarina 1
         printStory(tarinanNumero)
         // haetaan storychapteri, sillä numerolla, mikä on currentdialogin numero, eli aluksi 0, haetaan chapter 0
 
-    
-
-
     currentDialog = currentDialog +1;
 }
+
                     //esim alussa tarina numero 1
 function printStory (tarinanNumero) {
 
+    
     // tarinan popuppi isketään näkyviin
+    isStoryPopupActive = true;
     var storyAreaToShow = document.getElementById("storyPlacer");
     storyAreaToShow.style.visibility = '';
 
@@ -240,10 +245,16 @@ function printStory (tarinanNumero) {
 
 
 
-    
+    // tässä pyyhitään dialogi pois näkyvistä tai halutut vaihtoehdot pois näkyvistä + tarvittaessa vähennetään healthia
     if (story1[haluttuDialogi].dialogEnd === true){
         charSentence.innerHTML = story1[haluttuDialogi].mainMessage1;
         deleteAnswers();
+
+        if (story1[haluttuDialogi].dialogAffectsHealth === true){
+            editEconomyHealth(5);
+        }
+
+        
     } else if (story1[haluttuDialogi].hasOwnProperty('deleteAnswer')){
         document.getElementById(story1[haluttuDialogi].deleteAnswer).remove();
         charSentence.innerHTML = story1[haluttuDialogi].mainMessage1;
@@ -295,17 +306,6 @@ function storyContinuer(choosedAnswer){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -401,6 +401,7 @@ function clickSun(){
         currentEnergy+=1;
         totalEnergy+=1;
         levelUpListener();
+        //levelupListener kuuntelee pelintilannetta ja toteuttaa tarvittaessa, pelin etenemistä
 
         if (rocketBoosts >= 1){
             currentEnergy = currentEnergy += rocketBoosts;
@@ -975,37 +976,86 @@ function createLocation(nameOfOBject) {
 
 
 function hider(name){
-    var objToHide = document.getElementById(name);
-    objToHide.style.visibility = 'hidden';
+
+
+    if (name === 'storyPlacer'){
+        isStoryPopupActive = false;
+        var objToHide = document.getElementById(name);
+        objToHide.style.visibility = 'hidden';
+        isOhjeetPopupOpen = false;
+    } else {
+        var objToHide = document.getElementById(name);
+        objToHide.style.visibility = 'hidden';
+        isOhjeetPopupOpen = false;
+    }
+
+
+
 
 }
 
 function showHiddenDiv(name){
-    var objToShow = document.getElementById(name);
-    objToShow.style.visibility = 'visible';
+
+    if (isFactPopupOpen == true && name == 'ohjeetPopup') {
+
+        document.getElementById('releaseNotes').style.visibility = 'hidden';
+
+        document.getElementById('notificationsPlacer').remove()
+        var objToShow = document.getElementById(name);
+        objToShow.style.visibility = 'visible';
+        isOhjeetPopupOpen = true;
+        isFactPopupOpen = false;
+
+    } else if (isFactPopupOpen == true && name == 'releaseNotes'  ){
+
+
+        document.getElementById('notificationsPlacer').remove()
+        var objToShow = document.getElementById(name);
+        objToShow.style.visibility = 'visible';
+        isOhjeetPopupOpen = true;
+        isFactPopupOpen = false;
+
+    }
+
+
+    else if (isFactPopupOpen == false && name == 'releaseNotes') {
+        document.getElementById('ohjeetPopup').style.visibility = 'hidden';
+        var objToShow = document.getElementById(name);
+        objToShow.style.visibility = 'visible';
+        isOhjeetPopupOpen = true;
+    }
+
+    else if (isFactPopupOpen == false && name == 'ohjeetPopup') {
+        document.getElementById('releaseNotes').style.visibility = 'hidden';
+        var objToShow = document.getElementById(name);
+        objToShow.style.visibility = 'visible';
+        isOhjeetPopupOpen = true;
+    }
+
+
+
 }
 
 
 function deleter(name){
 
-
     if (name === ""){
-
     }
-
-
 
     if (name === "notifications"){
         startNotificationClosed = true;
-        document.getElementById(name).innerHTML = '<div id="trophyPopUp"></div>'
+        document.getElementById(name).innerHTML = '<div id="trophyPopUp"></div>';
     } else {
-        document.getElementById(name).innerHTML = '<div id="trophyPopUp"></div>'
+        //document.getElementById(name).innerHTML = '<div id="trophyPopUp"></div>';¨
+        document.getElementById(name).remove();
+        isFactPopupOpen = false;
+
     }
 
 }
 
 
-var levelBarAmount = 0;
+
 
 function updateLevelProgress () {
     if (totalEnergy >= levelBarAmount+100){
@@ -1016,7 +1066,7 @@ function updateLevelProgress () {
 }
 
 
-var lvlPgAmount = 0;
+
 function visualizeLevelProgress(number) {
 
     lvlPgAmount = (lvlPgAmount + number)
@@ -1031,7 +1081,7 @@ function updateRocketBoostBar (number) {
 }
 
 
-var boostBarAmount = 0;
+
 function visualizeRocketBoostBar(number) {
 
     boostBarAmount = (boostBarAmount + number)
@@ -1042,10 +1092,20 @@ function visualizeRocketBoostBar(number) {
 
 
 
+function editEconomyHealth(number) {
+    economyHealthBarBarAmount = 100 - number;
+
+    document.getElementById("economyHealthBarBarAmount").style.width = economyHealthBarBarAmount + "%";
+    alert("test")
+}
+
+
 
 
 
 function levelUpListener(){
+
+// tätä kutsutaan joko suoraan klikkauksista, tai automaattisten clikkereiden kautta
 
     if (levelProgress === 0 && totalEnergy >= 100){
         updateLevelProgress();
@@ -1151,46 +1211,66 @@ let sailotutTrophyt = [
     '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/planets/realPlanets/mars.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->',
     '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 3</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->']
 
-    let sailotutTrophyt2 = [
-        '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 1</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 100 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->', 
-        '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 2</h2><img src="Graphics/gameArea/planets/realPlanets/mars.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->',
-        '<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: 3</h2><img src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic" ><div id="trophyPopUpContent"><p class="trophyRewardPopUpText">As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.</p></div><!--Trophy popupcontent END--></div> <!-- trophyPopUp END-->']
+let sailotutTrophyt2 = [
+    "You're researches have not yet accomplished new breakthroughs.", 
+    'As you reached the amount of over 100 total energy you learned that Neutron stars can spin 600 times per second.', 
+    'As you reached the amount of over 1000 total energy you saw that the sunset on Mars appears blue!',
+    'As you reached the amount of over 10000 total energy you learned that Neutron stars can spin 600 times per second.']
     
     
 
     // trophyen tämän hetkinen tila. trophy openeria varten.
 let trophyInfo = {
-    trophy1: false,
-    trophy2: true,
+    trophy1: true,
+    trophy2: false,
     trophy3: false,
     trophy4: false,
     trophy5: false,
     trophy6: false,
 }
 
-function openTrophy(nameOfTrophy){
 
+function createTrophyArea(){
+    var notiFirst = ['<div id="notificationsPlacer"  style="visibility: ;" ><button class="ohjeetPopupCloseButton" onClick='];
+    var notiSec = ['deleter("notificationsPlacer")']
+    var notiThird = ['>X</button>']
+    var notiImage = ['<img id="trophyPic" src="Graphics/gameArea/trophies/Neutron_quark.png" class="trophyRewardPic"></img>']
+    var notiFour = ['<h2 class="ohjeetPopupTitle trophyPopupTitle">Achievement: </h2> <div id="trophyPopUpContent"><p class="trophyRewardPopUpText"></p>      </div></div>']
+
+    var notificationAreaForTrophies = notiFirst[0] + notiSec[0] + notiThird[0] + notiImage[0] + notiFour[0];
+    document.getElementById('notificationsArea').innerHTML = notificationAreaForTrophies;
+}
+
+function openTrophy(nameOfTrophy){
+    if (isFactPopupOpen === true){
+        document.getElementById('notificationsPlacer').remove();
+    }
+    if (isOhjeetPopupOpen === true){
+        hider('ohjeetPopup');
+    }
+
+    // Lisää tähän tsekki, onko trophyarea jo renderöity
+    createTrophyArea();
 
     if (trophyInfo[nameOfTrophy] === false){
+        document.getElementsByClassName('trophyRewardPopUpText')[0].innerHTML = sailotutTrophyt2[0];
+        document.getElementById("trophyPic").src="Graphics/gameArea/trophies/noTrophyIcon.png";
         return;
     } else {
+
+        isFactPopupOpen = true;
         switch(nameOfTrophy){
             case 'trophy1':
-                    showHiddenDiv('trophyPopUpPlacer') 
-                    document.getElementById('notificationsPlacer').innerHTML = sailotutTrophyt2[0];
-                    // document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[0] 
-                    clickTimeout();
+                document.getElementsByClassName('trophyRewardPopUpText')[0].innerHTML = sailotutTrophyt2[1];
+                document.getElementById("trophyPic").src="Graphics/gameArea/trophies/Neutron_quark.png";
+                clickTimeout();
                 break;
             case 'trophy2':
-                showHiddenDiv("notificationsPlacer")
-                //showHiddenDiv('trophyPopUpPlacer') 
-                document.getElementById('notificationsPlacer').innerHTML = sailotutTrophyt2[0];
-                // document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[1] 
+                document.getElementsByClassName('trophyRewardPopUpText')[0].innerHTML = sailotutTrophyt2[2];
                 clickTimeout();
                 break;
             case 'trophy3':
-                showHiddenDiv('trophyPopUpPlacer') 
-                document.getElementById('trophyPopUp').innerHTML = sailotutTrophyt[2] 
+                document.getElementsByClassName('trophyRewardPopUpText')[0].innerHTML = sailotutTrophyt2[3];
                 clickTimeout();
                 break;
             case 'trophy4':
