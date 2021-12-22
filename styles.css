@@ -140,10 +140,14 @@ header{
     min-width:300px;
     max-width:350px;
     position:relative;
-
+    font-style: italic;
     padding-top:22px;
     margin-left:auto;
     margin-right:auto;
+}
+
+.factTitle {
+    padding-top:20px;
 }
 
 #startGameNotification{
@@ -403,21 +407,21 @@ header{
 .trophyRewardPic {
     width:90px;
     position:absolute;
-    margin-left:-280px;
-    margin-top:-10;
+    margin-left:-240px;
+    margin-top:70;
 
 }
 .trophyRewardPopUpText{
-    margin-left:130px;
+    margin-left:110px;
     margin-top:25px;
-    max-width:420px;
+    max-width:380px;
     padding-bottom:40px;
 }
 
 .trophyPopupTitle{
     border-bottom:1px solid;
-    padding-top:10px;
-    padding-bottom:10px;
+    padding-top:15px;
+    padding-bottom:15px;
 }
 
 
