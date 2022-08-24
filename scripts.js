@@ -1,13 +1,13 @@
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
 
-    document.location = "indexMobile.html";
-    document.head.innerHTML = '<link href="stylesMobile.css" rel="stylesheet"></link>'
+   // document.location = "indexMobile.html";
+   // document.head.innerHTML = '<link href="stylesMobile.css" rel="stylesheet"></link>'
   }else{
-    document.head.innerHTML = '<link href="styles.css" rel="stylesheet"></link>'
+   // document.head.innerHTML = '<link href="styles.css" rel="stylesheet"></link>'
 }
 
 if(window.innerWidth < 800){
-    document.location = "indexMobile.html";
+ //   document.location = "indexMobile.html";
 }
 
 
